@@ -14,6 +14,6 @@
             ht.style.opacity = "1";
             offset500 = false;
         }
-        document.getElementById('main_header').style.backgroundPositionY = window.pageYOffset/5 *-1 + 'px';
+        document.getElementById('main_header').style.backgroundPositionY = window.pageYOffset/7 *-1 + 'px';
     })
 })()
