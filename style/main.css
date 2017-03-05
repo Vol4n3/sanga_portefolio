@@ -1,0 +1,35 @@
+#main_header{
+    height: 1100px  ;
+    background-image: url('../image/header_background2560px.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-position-x: center;        
+    background-position-y: 0px;        
+    background-repeat: no-repeat;
+    padding-left: 5vw;
+    padding-top: 5vw;
+    overflow: hidden;
+}
+#main_header .title{
+    font-family: 'Indie Flower', cursive;
+    color: white;
+    position: fixed;
+    left: 0;
+    opacity: 1;
+    transition: left 1s, opacity 1s;
+        padding-top: 5vw;
+        padding-left: 5vw;
+}
+#main_header h1{
+    font-size: 4.5em;
+}
+#main_header p{
+    font-size: 1.25em;
+}
+section{
+    background-color: lightslategray;
+    height: 1000px;
+}
+body{
+    position: relative;
+}
