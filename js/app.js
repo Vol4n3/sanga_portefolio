@@ -5,7 +5,7 @@
     window.addEventListener('scroll',function(e){
         let ht = document.getElementById('header_title')
         if(window.pageYOffset > 500 && !offset500){
-            ht.style.left = "500px";
+            ht.style.left = "350px";
             ht.style.opacity = "0";
             offset500 = true;
         }

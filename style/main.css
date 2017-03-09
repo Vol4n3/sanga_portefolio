@@ -17,8 +17,9 @@
     left: 0;
     opacity: 1;
     transition: left 1s, opacity 1s;
-        padding-top: 5vw;
-        padding-left: 5vw;
+    padding-top: 5vw;
+    padding-left: 5vw;
+    overflow: hidden;   
 }
 #main_header h1{
     font-size: 4.5em;
@@ -29,6 +30,9 @@
 section{
     background-color: lightslategray;
     height: 1000px;
+}
+img{
+    width: 10em;
 }
 body{
     position: relative;
