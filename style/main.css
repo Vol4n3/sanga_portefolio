@@ -35,15 +35,12 @@
     left: 0;
     opacity: 1;
     transition: left 1s, opacity 1s;
-<<<<<<< HEAD
     transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
     padding-top: 5vw;
     padding-left: 5vw;
-=======
     padding-top: 5vw;
     padding-left: 5vw;
     overflow: hidden;   
->>>>>>> fix some rules
 }
 #main_header h1{
     font-size: 4.5em;
