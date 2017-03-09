@@ -10,6 +10,24 @@
     padding-top: 5vw;
     overflow: hidden;
 }
+#main_header .nav{
+    color: white;
+    font-size: 0.7em;
+    width: 40%;
+    position: fixed;
+    right: 20px;
+    top: 20px;
+}
+#main_header .nav a{
+    padding: 5px 20px;
+    border: 1px solid #fff;
+    font-size: 1.5em;
+    transition: color 0.5s, border-color 0.5s;
+}
+#main_header .nav a:hover{
+    border-color: #f35325;
+    color: #f35325;
+}
 #main_header .title{
     font-family: 'Indie Flower', cursive;
     color: white;
@@ -17,8 +35,9 @@
     left: 0;
     opacity: 1;
     transition: left 1s, opacity 1s;
-        padding-top: 5vw;
-        padding-left: 5vw;
+    transition-timing-function: cubic-bezier(0.075, 0.82, 0.165, 1);
+    padding-top: 5vw;
+    padding-left: 5vw;
 }
 #main_header h1{
     font-size: 4.5em;
