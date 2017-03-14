@@ -197,6 +197,10 @@ box-shadow: 0 3px 8px 0 rgba(0,0,0,0.2), 0 0 0 1px rgba(0,0,0,0.08);
         body{
             font-size: 0.55em;
         }
+        .box{
+            flex-direction: column !important;
+                align-items: center;
+        }
 }
 @media (max-width: 320px){
         body{
