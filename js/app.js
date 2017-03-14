@@ -30,7 +30,7 @@
                 var gainNode = context.createGain();
                 source.buffer = buffer;
                 source.connect(gainNode);
-                source.connect(context.destination);
+                gainNode.connect(context.destination);
                 gainNode.gain.value = 0.2;
                 source.start(0);
             })
