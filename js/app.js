@@ -27,8 +27,11 @@
             context.decodeAudioData(req.response, function (buffer) {
                 audioBuffer = buffer;
                 var source = context.createBufferSource();
+                var gainNode = context.createGain();
                 source.buffer = buffer;
+                source.connect(gainNode);
                 source.connect(context.destination);
+                gainNode.gain.value = 0.2;
                 source.start(0);
             })
         });
