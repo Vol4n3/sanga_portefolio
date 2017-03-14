@@ -1,3 +1,4 @@
+
 (function(){
     let isMoved;
     document.getElementById('main_header').style.backgroundPositionY = window.pageYOffset/10 *-1 + 'px';
@@ -15,7 +16,6 @@
         }
         document.getElementById('main_header').style.backgroundPositionY = window.pageYOffset/100*-1 + 'px';
     });
-    
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     var context = new AudioContext();
     var audioBuffer = null;

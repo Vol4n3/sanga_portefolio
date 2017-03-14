@@ -57,8 +57,12 @@
     font-family: 'Bilbo Swash Caps', cursive;
     font-size: 2.5em;
 }
-section{
+section#presentation{
     background-color: lightslategray;
+    height: 1000px;
+}
+section#contact{
+    background-color:firebrick;
     height: 1000px;
 }
 img{
