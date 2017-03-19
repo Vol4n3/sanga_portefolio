@@ -2,14 +2,10 @@
 	font-family: "ShoppingScript";
 	src: url('font/ShoppingScript.ttf');
 }
-#particle{
-    position: fixed;
-    top: 0;
-    left: 0;
-}
+
 #main_header{
     height: 1100px  ;
-    background-image: url('../image/header_background2560px.jpg');
+    background-image: url('../image/bg_sanga_redless.jpg');
     background-size: cover;
     background-attachment: fixed;
     background-position-x: center;        
@@ -18,6 +14,12 @@
     padding-left: 5vw;
     padding-top: 5vw;
     overflow: hidden;
+    position: relative;
+}
+#particle{
+    position: absolute;
+    top: 0;
+    left: 0;
 }
 #main_header .nav{
     color: white;
@@ -75,4 +77,9 @@ img{
 }
 body{
     position: relative;
+}
+@media (max-width: 425px){
+        #main_header{
+            background-image: url('../image/bg_mobile_redless.jpg');
+        }
 }
