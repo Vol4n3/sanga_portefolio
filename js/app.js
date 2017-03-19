@@ -38,4 +38,32 @@
         req.send();
     }
     load();
+    // particles
+    /**
+     * @type {HTMLCanvasElement}
+     */
+    var canvas = document.getElementById('particle');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    window.addEventListener('resize',function(){
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    })
+    var ctx = canvas.getContext('2d');
+    
+
+    var w = new jc_physics.World();
+    for (let i = 0; i < 100; i++) {
+        let p = new jc_physics.SnowFlake(Math.random() * canvas.width, Math.random() * canvas.height, Math.random() );
+        w.add(p);
+    }
+    window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
+
+    function boucle() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        w.draw(ctx);
+        requestAnimationFrame(boucle)
+    }
+    requestAnimationFrame(boucle)
+
 })()
