@@ -21,6 +21,14 @@
                 return round;
             }
         }
+        round1000(n) {
+            var round = Math.round(n * 10000) / 10000;
+            if (round <= 0.01 && round >= -0.01) {
+                return 0;
+            } else {
+                return round;
+            }
+        }
     }
     //Point
     class Point extends MathPhysics {
@@ -161,8 +169,8 @@
         constructor(x, y) {
             super();
             this.type = "Vector";
-            this.x = this.round100(x) || 0;
-            this.y = this.round100(y) || 0;
+            this.x = this.round1000(x) || 0;
+            this.y = this.round1000(y) || 0;
             //initialize angle and length
             this.length = 0;
             this.angle = 0;
@@ -174,8 +182,8 @@
             this.getAngle();
         }
         setLength(length) {
-            this.x = this.round100(Math.cos(this.angle) * length);
-            this.y = this.round100(Math.sin(this.angle) * length);
+            this.x = this.round1000(Math.cos(this.angle) * length);
+            this.y = this.round1000(Math.sin(this.angle) * length);
             this.update()
         }
         getLength() {
@@ -183,8 +191,8 @@
             return this.length;
         }
         setAngle(angle) {
-            this.x = this.round100(Math.cos(angle) * this.length);
-            this.y = this.round100(Math.sin(angle) * this.length);
+            this.x = this.round1000(Math.cos(angle) * this.length);
+            this.y = this.round1000(Math.sin(angle) * this.length);
             this.update();
         }
         getAngle() {
@@ -198,8 +206,8 @@
         }
         add(vector) {
             if (vector.type == "Vector") {
-                this.x = this.round100(this.x + vector.x);
-                this.y = this.round100(this.y + vector.y);
+                this.x = this.round1000(this.x + vector.x);
+                this.y = this.round1000(this.y + vector.y);
                 this.update();
                 return this;
             } else {
@@ -209,8 +217,8 @@
 
         subtract(vector) {
             if (vector.type == "Vector") {
-                this.x = this.round100(this.x - vector.x);
-                this.y = this.round100(this.y - vector.y);
+                this.x = this.round1000(this.x - vector.x);
+                this.y = this.round1000(this.y - vector.y);
                 this.update();
                 return this;
             } else {
@@ -220,8 +228,8 @@
 
         multiply(vector) {
             if (vector.type == "Vector") {
-                this.x = this.round100(this.x * vector.x);
-                this.y = this.round100(this.y * vector.y);
+                this.x = this.round1000(this.x * vector.x);
+                this.y = this.round1000(this.y * vector.y);
                 this.update();
                 return this;
             } else {
@@ -231,8 +239,8 @@
 
         divide(vector) {
             if (vector.type == "Vector") {
-                this.x = this.round100(this.x / vector.x);
-                this.y = this.round100(this.y / vector.y);
+                this.x = this.round1000(this.x / vector.x);
+                this.y = this.round1000(this.y / vector.y);
                 this.update();
                 return this;
             } else {
@@ -374,6 +382,7 @@
             this.velocity = new Vector(0,0);
             this.z = z || (Math.random() * 30 + 1);
             this.growth = 0;
+            this.wind = new Vector(0.00,0.00);
         }
         update(){
             let randx = (Math.random() * 2) - 1;
@@ -381,6 +390,7 @@
             let randz = (Math.random() * 2) - 1;
             this.growth += randz*0.01;
             this.velocity.add(new Vector(randx*0.3,randy*0.3));
+            this.velocity.add(this.wind);
             this.x = this.round10(this.x + this.velocity.x);
             this.y = this.round10(this.y + this.velocity.y);
             this.z += this.growth;
@@ -420,14 +430,20 @@
     class World {
         constructor(...items) {
             this.items = items || [];
+            this.wind = new Vector(0,0);
         }
         add(item) {
             this.items.push(item);
         }
         draw(ctx) {
             for (var i = 0; i < this.items.length; i++) {
+                this.items[i].wind = this.wind;
                 this.items[i].draw(ctx);
             }
+        }
+        setWind(x,y){
+            this.wind.x = x;
+            this.wind.y = y;
         }
     }
     exports.Segment = Segment;

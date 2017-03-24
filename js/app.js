@@ -55,13 +55,14 @@
 
 
     var w = new jc_physics.World();
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 1000; i++) {
         let p = new jc_physics.SnowFlake(Math.random() * canvas.width, Math.random() * canvas.height, Math.random());
         w.add(p);
     }
     window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
-
+    w.setWind(-0.1,0);
     function boucle() {
+  
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         w.draw(ctx);
         requestAnimationFrame(boucle)
