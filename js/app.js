@@ -27,8 +27,8 @@
     var audioBuffer = null;
     function load() {
         var req = new XMLHttpRequest();
-        //req.open('get', 'assets/extrait.mp3');
-        req.open('get', 'mp3/mus01.mp3');
+        req.open('get', 'assets/extrait.mp3');
+        //req.open('get', 'mp3/mus01.mp3');
         req.responseType = 'arraybuffer';
         req.addEventListener('load', function (ev) {
             context.decodeAudioData(req.response, function (buffer) {
