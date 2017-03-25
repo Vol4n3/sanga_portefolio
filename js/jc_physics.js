@@ -441,13 +441,10 @@
                 this.items[i].draw(ctx);
             }
         }
-        setWind(x,y){
-            this.wind.x = x;
-            this.wind.y = y;
-        }
     }
     exports.Segment = Segment;
     exports.Point = Point;
+    exports.Vector = Vector;
     exports.Particle = Particle;
     exports.SnowFlake = SnowFlake;
     exports.PhysicPoint = PhysicPoint;
