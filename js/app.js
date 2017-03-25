@@ -24,6 +24,7 @@
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     var context = new AudioContext();
     var analyseur = context.createAnalyser();
+    analyseur.fftSize = 4096;
     var audioBuffer = null;
     function load() {
         var req = new XMLHttpRequest();
@@ -47,7 +48,7 @@
         req.send();
     }
     load();
-        
+
     // particles
     /**
      * @type {HTMLCanvasElement}
@@ -64,63 +65,65 @@
 
 
     var w = new jc_physics.World();
-    for (let i = 0; i < 500; i++) {
+    for (let i = 0; i < 150; i++) {
         let p = new jc_physics.SnowFlake(Math.random() * canvas.width, Math.random() * canvas.height, Math.random());
         w.add(p);
     }
     var tailleBuffer = analyseur.frequencyBinCount;
     var tableauDonnees = new Uint8Array(tailleBuffer);
-    var logg = setInterval(function(){
+    var logg = setInterval(function () {
         //analyseur.getByteTimeDomainData(tableauDonnees);
-    //console.log(tableauDonnees);
-    
-    },100)
-    setTimeout(function(){
+        //console.log(tableauDonnees);
 
-    clearInterval(logg)},2000)
+    }, 100)
+    setTimeout(function () {
+
+        clearInterval(logg)
+    }, 2000)
     window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
     function boucle() {
 
-        w.wind.add(new jc_physics.Vector(0,0    ))
-        
-        
+        w.wind.add(new jc_physics.Vector(0, 0))
+
+
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         w.draw(ctx);
-///tes
-    analyseur.getByteTimeDomainData(tableauDonnees);
+        ///tes
+        analyseur.getByteFrequencyData(tableauDonnees);
+        ctx.beginPath();
+        ctx.fillStyle = 'rgb(255, 255, 255)';
+        ctx.strokeStyle = 'rgb(255, 255,255)';
+        ctx.lineWidth = 2;
 
 
-      //ctx.fillRect(0, 0, canvas.width, canvas.height);
+        var sliceWidth = canvas.width * 1.0 / tailleBuffer;
+        var largeurBarre = (canvas.width / tailleBuffer) * 2.5;
+      var hauteurBarre;
+        var x = 0;
+        for (var i = 0; i < tailleBuffer; i++) {
+/*
+            var v = tableauDonnees[i] / 128.0;
+            var y = v * canvas.height / 2;
 
+             if (i === 0) {
+                 ctx.moveTo(x, y);
+             } else {
+                 ctx.lineTo(x, y);
+             }
+*/
+        hauteurBarre = tableauDonnees[i];
+        
+        ctx.fillStyle = 'rgb(' + hauteurBarre + ','+hauteurBarre+','+hauteurBarre+')';
+        ctx.fillRect(x,canvas.height - hauteurBarre ,largeurBarre,hauteurBarre);
 
-
-
-      ctx.beginPath();
-      ctx.fillStyle = 'rgb(255, 255, 255)';
-            ctx.strokeStyle = 'rgb(255, 255,255)';
-                  ctx.lineWidth = 2;
-      var sliceWidth = canvas.width * 1.0 / tailleBuffer;
-      var x = 0;
-
-      for(var i = 0; i < tailleBuffer; i++) {
-   
-        var v = tableauDonnees[i] / 128.0;
-        var y = v * canvas.height/2;
-
-        if(i === 0) {
-          ctx.moveTo(x, y);
-        } else {
-          ctx.lineTo(x, y);
+        x += largeurBarre + 1;
         }
 
-        x += sliceWidth;
-      }
-
-      ctx.lineTo(canvas.width, canvas.height/2);
-      ctx.stroke();
+        ctx.lineTo(canvas.width, canvas.height / 2);
+        ctx.stroke();
 
 
-    
+
         requestAnimationFrame(boucle)
     }
     requestAnimationFrame(boucle)
