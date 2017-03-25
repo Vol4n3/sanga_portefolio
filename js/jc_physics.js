@@ -380,19 +380,20 @@
             super(x,y,z);
             this.color = "white";
             this.velocity = new Vector(0,0);
-            this.z = z || (Math.random() * 30 + 1);
+            this.z = z || 1;
             this.growth = 0;
             this.wind = new Vector(0.00,0.00);
+            this.speed = 1;
         }
         update(){
             let randx = (Math.random() * 2) - 1;
             let randy = (Math.random() * 2) - 1;
             let randz = (Math.random() * 2) - 1;
-            this.growth += randz*0.01;
+            this.growth += randz*(this.speed / 6);
             this.velocity.add(new Vector(randx*0.3,randy*0.3));
             this.velocity.add(this.wind);
-            this.x = this.round10(this.x + this.velocity.x);
-            this.y = this.round10(this.y + this.velocity.y);
+            this.x =  this.round10(this.x + this.velocity.x * this.speed);
+            this.y =  this.round10(this.y + this.velocity.y * this.speed);
             this.z += this.growth;
         }
         getRadius(){
@@ -421,7 +422,7 @@
             if(this.x > ctx.canvas.width || this.y > ctx.canvas.height || this.x < 0 || this.y < 0 || this.z > 40){
                 this.x = Math.random() * ctx.canvas.width;
                 this.y = Math.random() * ctx.canvas.height;
-                this.z = 1;
+                this.z =1;
                 this.velocity = new Vector(0,0);
                 this.growth = 0;
             }
@@ -431,6 +432,7 @@
         constructor(...items) {
             this.items = items || [];
             this.wind = new Vector(0,0);
+            this.speed = 1;
         }
         add(item) {
             this.items.push(item);
@@ -438,6 +440,7 @@
         draw(ctx) {
             for (var i = 0; i < this.items.length; i++) {
                 this.items[i].wind = this.wind;
+                this.items[i].speed = this.speed;
                 this.items[i].draw(ctx);
             }
         }

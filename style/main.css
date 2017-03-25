@@ -2,17 +2,18 @@
 	font-family: "ShoppingScript";
 	src: url('font/ShoppingScript.ttf');
 }
+body{
+height: 100%;
+}
 
 #main_header{
-    height: 1100px  ;
+    height: 100%  ;
     background-image: url('../image/bg_sanga_redless.jpg');
     background-size: cover;
     background-attachment: fixed;
     background-position-x: center;        
     background-position-y: 0px;        
     background-repeat: no-repeat;
-    padding-left: 5vw;
-    padding-top: 5vw;
     overflow: hidden;
     position: relative;
 }
