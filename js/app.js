@@ -5,7 +5,13 @@
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     var context = new AudioContext();
     var analyseur = context.createAnalyser();
-    analyseur.fftSize = 2048;
+    var mainHeader = document.getElementById('main_header');
+    if(mainHeader.offsetWidth < 1024){
+        analyseur.fftSize = Math.pow(2,9);
+    }
+    else{
+         analyseur.fftSize = Math.pow(2,11);
+    }
     //analyseur.fftSize = 1024;
     var audioBuffer = null;
     function load() {
@@ -37,7 +43,7 @@
      * @type {HTMLCanvasElement} canvas
      */
     var canvas = document.getElementById('particle');
-    var mainHeader = document.getElementById('main_header');
+
     canvas.width = mainHeader.offsetWidth;
     canvas.height = mainHeader.offsetHeight;
     window.addEventListener('resize', function () {
@@ -48,7 +54,7 @@
 
 
     var w = new jc_physics.World();
-    for (let i = 0; i < 150; i++) {
+    for (let i = 0; i < 100; i++) {
         let p = new jc_physics.SnowFlake(Math.random() * canvas.width, Math.random() * canvas.height, Math.random());
         w.add(p);
     }
