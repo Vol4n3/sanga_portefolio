@@ -37,16 +37,16 @@
             super();
             this.type = "Point";
             this.color = "black";
-            this.x = this.round10(x) || 0;
-            this.y = this.round10(y) || 0;
+            this.x = x || 0;
+            this.y = y || 0;
         }
         update() {
 
         }
         translate(vector) {
             if (vector.type == "Vector") {
-                this.x = this.round10(this.x + vector.x);
-                this.y = this.round10(this.y + vector.y);
+                this.x = this.x + vector.x;
+                this.y = this.y + vector.y;
                 return this;
             } else {
                 return false;
@@ -169,8 +169,8 @@
         constructor(x, y) {
             super();
             this.type = "Vector";
-            this.x = this.round1000(x) || 0;
-            this.y = this.round1000(y) || 0;
+            this.x = x || 0;
+            this.y = y || 0;
             //initialize angle and length
             this.length = 0;
             this.angle = 0;
@@ -182,8 +182,8 @@
             this.getAngle();
         }
         setLength(length) {
-            this.x = this.round1000(Math.cos(this.angle) * length);
-            this.y = this.round1000(Math.sin(this.angle) * length);
+            this.x = Math.cos(this.angle) * length;
+            this.y = Math.sin(this.angle) * length;
             this.update()
         }
         getLength() {
@@ -191,8 +191,8 @@
             return this.length;
         }
         setAngle(angle) {
-            this.x = this.round1000(Math.cos(angle) * this.length);
-            this.y = this.round1000(Math.sin(angle) * this.length);
+            this.x = Math.cos(angle) * this.length;
+            this.y = Math.sin(angle) * this.length;
             this.update();
         }
         getAngle() {
@@ -206,8 +206,8 @@
         }
         add(vector) {
             if (vector.type == "Vector") {
-                this.x = this.round1000(this.x + vector.x);
-                this.y = this.round1000(this.y + vector.y);
+                this.x = this.x + vector.x;
+                this.y = this.y + vector.y;
                 this.update();
                 return this;
             } else {
@@ -217,8 +217,8 @@
 
         subtract(vector) {
             if (vector.type == "Vector") {
-                this.x = this.round1000(this.x - vector.x);
-                this.y = this.round1000(this.y - vector.y);
+                this.x = this.x - vector.x;
+                this.y = this.y - vector.y;
                 this.update();
                 return this;
             } else {
@@ -228,8 +228,8 @@
 
         multiply(vector) {
             if (vector.type == "Vector") {
-                this.x = this.round1000(this.x * vector.x);
-                this.y = this.round1000(this.y * vector.y);
+                this.x = this.x * vector.x;
+                this.y = this.y * vector.y;
                 this.update();
                 return this;
             } else {
@@ -239,8 +239,8 @@
 
         divide(vector) {
             if (vector.type == "Vector") {
-                this.x = this.round1000(this.x / vector.x);
-                this.y = this.round1000(this.y / vector.y);
+                this.x = this.x / vector.x;
+                this.y = this.y / vector.y;
                 this.update();
                 return this;
             } else {
@@ -256,8 +256,8 @@
             this.speed = 0;
             this.center = new Point(0, 0);
             this.tanPoint = new Point(
-                this.round10(Math.cos(this.angle) * this.radius),
-                this.round10(Math.sin(this.angle) * this.radius)
+                Math.cos(this.angle) * this.radius,
+                Math.sin(this.angle) * this.radius
             );
         }
         update() {
@@ -319,8 +319,8 @@
             this.rotation = this.circleMovement.angle;
 
             this.velocity.multiply(this.friction);
-            this.x = this.round10(this.x + this.velocity.x);
-            this.y = this.round10(this.y + this.velocity.y);
+            this.x = this.x + this.velocity.x;
+            this.y = this.y + this.velocity.y;
         }
         gravitateTo(p2) {
             //todo
@@ -373,17 +373,24 @@
         constructor(x,y,z){
             super(x,y);
             this.z = z || 1;
+            this.velocity = new Vector(0,0);
+            this.wind = new Vector(0.0,0.0);
+            this.speed = 1;
+            this.growth = 0;
+        }
+         getRadius(){
+            return this.z;
+        }
+    }
+    class LightFlare extends Particle{
+        constructor(x,y,z){
+            super(x,y,z);
         }
     }
     class SnowFlake extends Particle{
         constructor(x,y,z){
             super(x,y,z);
             this.color = "white";
-            this.velocity = new Vector(0,0);
-            this.z = z || 1;
-            this.growth = 0;
-            this.wind = new Vector(0.00,0.00);
-            this.speed = 1;
         }
         update(){
             let randx = (Math.random() * 2) - 1;
@@ -392,13 +399,11 @@
             this.growth += randz*(this.speed / 6);
             this.velocity.add(new Vector(randx*0.3,randy*0.3));
             this.velocity.add(this.wind);
-            this.x =  this.round10(this.x + this.velocity.x * this.speed);
-            this.y =  this.round10(this.y + this.velocity.y * this.speed);
+            this.x = this.x + this.velocity.x * this.speed;
+            this.y = this.y + this.velocity.y * this.speed;
             this.z += this.growth;
         }
-        getRadius(){
-            return this.z;
-        }
+
         getColor(){
             let alpha = 1/(this.z);
             alpha = alpha > 1 ? 1 : alpha;
@@ -419,7 +424,7 @@
             ctx.fillStyle = gradient;
             ctx.arc(this.x, this.y, this.getRadius(), 0, Math.PI * 2)
             ctx.fill();
-            if(this.x > ctx.canvas.width || this.y > ctx.canvas.height || this.x < 0 || this.y < 0 || this.z > 40){
+            if(this.x > ctx.canvas.width || this.y > ctx.canvas.height || this.x < 0 || this.y < 0 || this.z > 50){
                 this.x = Math.random() * ctx.canvas.width;
                 this.y = Math.random() * ctx.canvas.height;
                 this.z =1;
@@ -445,6 +450,7 @@
             }
         }
     }
+    exports.LightFlare = LightFlare;
     exports.Segment = Segment;
     exports.Point = Point;
     exports.Vector = Vector;

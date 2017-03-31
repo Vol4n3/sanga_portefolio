@@ -40,6 +40,9 @@ input{
 .invisible{
     opacity: 0;
 }
+.blur{
+   filter : blur(3px);
+}
 
 /*
 * Alignement

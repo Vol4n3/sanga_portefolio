@@ -1,23 +1,24 @@
 
-(function () {
 
+window.addEventListener('load', function () {
+    document.getElementById('galery').addEventListener('click',function(e){
+        $(this).toggleClass('invisible');
+        $('#main_header').toggleClass('blur');
+    })
     //const jc_physics = require("./jc_physics.js");
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     var context = new AudioContext();
     var analyseur = context.createAnalyser();
     var mainHeader = document.getElementById('main_header');
-    if(mainHeader.offsetWidth < 1024){
-        analyseur.fftSize = Math.pow(2,9);
-    }
-    else{
-         analyseur.fftSize = Math.pow(2,11);
-    }
+
+    analyseur.fftSize = Math.pow(2, 8);
+
     //analyseur.fftSize = 1024;
     var audioBuffer = null;
     function load() {
         var req = new XMLHttpRequest();
         req.open('get', 'assets/extrait.mp3');
-        //req.open('get', 'mp3/mus01.mp3');
+        req.open('get', 'mp3/mus01.mp3');
         req.responseType = 'arraybuffer';
         req.addEventListener('load', function (ev) {
             context.decodeAudioData(req.response, function (buffer) {
@@ -44,17 +45,17 @@
      */
     var canvas = document.getElementById('particle');
 
-    canvas.width = mainHeader.offsetWidth;
-    canvas.height = mainHeader.offsetHeight;
+    canvas.width = document.body.offsetWidth;
+    canvas.height = document.body.offsetHeight;
     window.addEventListener('resize', function () {
-        canvas.width = mainHeader.offsetWidth;
-        canvas.height = mainHeader.offsetHeight;
+        canvas.width = document.body.offsetWidth;
+        canvas.height = document.body.offsetHeight;
     })
     var ctx = canvas.getContext('2d');
 
 
     var w = new jc_physics.World();
-    for (let i = 0; i < 100; i++) {
+    for (let i = 0; i < 50; i++) {
         let p = new jc_physics.SnowFlake(Math.random() * canvas.width, Math.random() * canvas.height, Math.random());
         w.add(p);
     }
@@ -65,59 +66,53 @@
 
     var freq = 600;
     var sfreq = 0;
+    w.wind.y = -0.02;
+    w.speed = 0.10;
+    /**
+     * @returns {void}
+     * @param {CanvasRenderingContext2D} ctx 
+     * @param {Uint8Array} tableauDonnees 
+     * @param {Boolean} inverse 
+     */
+    var drawLine = function (ctx,tableauDonnees,inverse) {
+        ctx.beginPath();
+        ctx.strokeStyle = 'rgb(255, 255,255)';
+        if(inverse)ctx.fillStyle = 'rgba(255,255,255,0.3)';
+        else  ctx.fillStyle = 'rgba(255,255,255,0.3)';
+        ctx.lineWidth = 1;
+        posX = ctx.canvas.width - 100;
+        posY = ctx.canvas.height - 100;
+        var x = (50 + tableauDonnees[0] / 6) * Math.cos(0);
+        var y = (50 + tableauDonnees[0] / 6) * Math.sin(0);
+        ctx.moveTo(posX + x, posY + y);
+        if( inverse){
+            for (var i = -1; i >= -180; i--) {
+                var angle = Math.PI * i / 180;
+                var donnee = Math.round(-1 * i * (analyseur.fftSize / 2.2) / 180);
+                x = (50 + tableauDonnees[donnee] / 6) * Math.cos(angle);
+                y = (50 + tableauDonnees[donnee] / 6) * Math.sin(angle);
+                ctx.lineTo(posX + x, posY + y);
+            }
+        }else{
+            for (var i = 1; i <= 180; i++) {
+                var angle = Math.PI * i / 180;
+                var donnee = Math.round(1 * i * (analyseur.fftSize / 2.2) / 180);
+                x = (50 + tableauDonnees[donnee] / 6) * Math.cos(angle);
+                y = (50 + tableauDonnees[donnee] / 6) * Math.sin(angle);
+                ctx.lineTo(posX + x, posY + y);
+            }
+        }
+        ctx.stroke();
+        ctx.fill();
+    }
     function boucle() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        w.draw(ctx);
-
         analyseur.getByteFrequencyData(tableauDonnees);
-        ctx.beginPath();
-        ctx.fillStyle = 'rgb(255, 255, 255)';
-        ctx.strokeStyle = 'rgb(255, 255,255)';
-        ctx.lineWidth = 2;
-        var largeurBarre = (canvas.width / (tailleBuffer / 2     )) * 2.5;
-        var hauteurBarre;
-        var x = sfreq;
-        var basseCount = 0;
-        /*
-                for(var i = sfreq; i<freq; i++ ){
-                    basseCount += tableauDonnees[0];
-                }
-                var moyenn = basseCount / (freq - sfreq);
-                var boost =(moyenn  /20 +0.50 );
-                if(moyenn >45){
-        
-                    w.speed = boost +0.50;
-                }else{
-                        w.speed = 0.50;
-                }
-              for (var i = sfreq; i < freq  ; i++) {
-                  hauteurBarre = tableauDonnees[i];
-                  ctx.fillStyle = 'rgb(' + hauteurBarre + ',' + hauteurBarre + ',' + hauteurBarre + ')';
-                  ctx.fillRect(x, canvas.height - hauteurBarre, largeurBarre, hauteurBarre);
-                  x += largeurBarre + 1;
-              }
-                ctx.lineTo(canvas.width, canvas.height / 2);
-                ctx.stroke();
-                */
-                ctx.beginPath();
-        ctx.moveTo(x, canvas.height -tableauDonnees[0]);
-        var i;
-        var pas = 1;
-        for (i = sfreq; i < freq - 2; i+=pas) {
-            x += largeurBarre + pas;
-            var xc = (x +  x + largeurBarre +pas ) / 2;
-            var yc = ( tableauDonnees[i] + tableauDonnees[i + pas]) / 2;
-   
-                ctx.quadraticCurveTo(x, canvas.height -tableauDonnees[i], xc, canvas.height -yc);
-
-            
-            
-        }
-        // curve through the last two points
-        //ctx.quadraticCurveTo(x,  tableauDonnees[i], x + largeurBarre + pas,0);
-        ctx.stroke();
+        drawLine(ctx,tableauDonnees);
+        drawLine(ctx,tableauDonnees,true);
+        w.draw(ctx);
         requestAnimationFrame(boucle)
     }
     requestAnimationFrame(boucle)
 
-})()
+})

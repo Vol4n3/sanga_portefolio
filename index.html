@@ -12,19 +12,19 @@
     <link rel="stylesheet" type="text/css" href="https://necolas.github.io/normalize.css/5.0.0/normalize.css">
     <link rel="stylesheet" type="text/css" href="style/jcv_style.css">
     <link rel="stylesheet" type="text/css" href="style/main.css">
+    <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script defer src="js/jc_physics.js"></script>
     <script defer src="js/app.js"></script>
 
 </head>
 
 <body>
+    <canvas id="particle"></canvas>
     <header class="" id="main_header">
-        <canvas id="particle"></canvas>
-        
         <nav class="box left space_between nav">
-            <a onclick="scrollTo(0, 1000);">Home</a>
-            <a href="#presentation">Découverte</a>
             <a href="#contact">Contact</a>
+            <a href="#presentation">Découverte</a>
+            <a onclick="">Home</a>
         </nav>
         <div class="logo">
             <img src="image/SANGA-pour-fond-fonce.png" width="256" alt="">
@@ -34,6 +34,12 @@
             <p>Minim adipisicing elit duis ipsum .</p>
         </div>
     </header>
+    <main class="">
+        <section class="box center y_center invisible" id="galery">
+            <div class="img" style="background-image:url(image/studio.jpg);"></div>
+            <div class="img" style="background-image:url(image/sanga_gros_plan.jpg);"></div>
+        </section>
+    </main>
 </body>
 
 </html>
