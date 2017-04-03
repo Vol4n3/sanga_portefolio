@@ -1,17 +1,41 @@
-
-
+var analyseur;
 window.addEventListener('load', function () {
-    document.getElementById('galery').addEventListener('click',function(e){
-        $(this).toggleClass('invisible');
-        $('#main_header').toggleClass('blur');
-    })
+    "use strict";
+    /**
+     * @param {Event} e
+     */
+    document.body.addEventListener('click', function (e) {
+
+        var elem = e.target;
+        //console.log(elem);
+        if (elem == document.getElementById('btn_galery') || elem == document.getElementById('galery')) {
+            var $galery = $('#galery')
+            
+            if ($galery.hasClass('hide')) {
+                $galery.toggleClass('hide');
+                setTimeout(function(){
+                    $galery.toggleClass('invisible');
+                },1)
+            } else {
+                $galery.toggleClass('invisible');
+                setTimeout(function () {
+                    $galery.toggleClass('hide');
+                }, 1000)
+            }
+
+            $('#main_header').toggleClass('blur');
+        }
+        if ($(elem).hasClass('img')) {
+            console.log('tru')
+        }
+    });
     //const jc_physics = require("./jc_physics.js");
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     var context = new AudioContext();
-    var analyseur = context.createAnalyser();
+    analyseur = context.createAnalyser();
     var mainHeader = document.getElementById('main_header');
 
-    analyseur.fftSize = Math.pow(2, 8);
+    analyseur.fftSize = Math.pow(2, 11);
 
     //analyseur.fftSize = 1024;
     var audioBuffer = null;
@@ -59,48 +83,47 @@ window.addEventListener('load', function () {
         let p = new jc_physics.SnowFlake(Math.random() * canvas.width, Math.random() * canvas.height, Math.random());
         w.add(p);
     }
-    var tailleBuffer = analyseur.frequencyBinCount;
-    var tableauDonnees = new Uint8Array(tailleBuffer);
+    var tableauDonnees = new Uint8Array(128);
     w.speed = 0.50;
     window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
-
-    var freq = 600;
-    var sfreq = 0;
     w.wind.y = -0.02;
     w.speed = 0.10;
+    const CIRCLE_SIZE_MIN = 50;
+    const CIRCLE_SIZE_FACTOR = 0.30;
+    const TWO_PI = Math.PI * 2;
+    analyseur.minDecibels = -65;
+    analyseur.maxDecibels = -15;
+    analyseur.smoothingTimeConstant = 0.50;
     /**
      * @returns {void}
      * @param {CanvasRenderingContext2D} ctx 
      * @param {Uint8Array} tableauDonnees 
      * @param {Boolean} inverse 
      */
-    var drawLine = function (ctx,tableauDonnees,inverse) {
+    var drawLine = function (ctx, tableauDonnees) {
+        var smoothTabs = Smooth(tableauDonnees, {
+            period: TWO_PI,
+            method: Smooth.METHOD_CUBIC,
+            clip: Smooth.CLIP_PERIODIC,
+            sincFilterSize: 10,
+        });
         ctx.beginPath();
         ctx.strokeStyle = 'rgb(255, 255,255)';
-        if(inverse)ctx.fillStyle = 'rgba(255,255,255,0.3)';
-        else  ctx.fillStyle = 'rgba(255,255,255,0.3)';
+        ctx.fillStyle = 'rgba(255,255,255,0.3)';
         ctx.lineWidth = 1;
-        posX = ctx.canvas.width - 100;
-        posY = ctx.canvas.height - 100;
-        var x = (50 + tableauDonnees[0] / 6) * Math.cos(0);
-        var y = (50 + tableauDonnees[0] / 6) * Math.sin(0);
+        var posX = ctx.canvas.width - 100;
+        var posY = ctx.canvas.height - 100;
+        var iteration = Math.round(1 * tableauDonnees.length / TWO_PI);
+        var change = TWO_PI / tableauDonnees.length;
+        var x = (CIRCLE_SIZE_MIN + smoothTabs(0) * CIRCLE_SIZE_FACTOR) * Math.cos(0);
+        var y = (CIRCLE_SIZE_MIN + smoothTabs(0) * CIRCLE_SIZE_FACTOR) * Math.sin(0);
         ctx.moveTo(posX + x, posY + y);
-        if( inverse){
-            for (var i = -1; i >= -180; i--) {
-                var angle = Math.PI * i / 180;
-                var donnee = Math.round(-1 * i * (analyseur.fftSize / 2.2) / 180);
-                x = (50 + tableauDonnees[donnee] / 6) * Math.cos(angle);
-                y = (50 + tableauDonnees[donnee] / 6) * Math.sin(angle);
-                ctx.lineTo(posX + x, posY + y);
-            }
-        }else{
-            for (var i = 1; i <= 180; i++) {
-                var angle = Math.PI * i / 180;
-                var donnee = Math.round(1 * i * (analyseur.fftSize / 2.2) / 180);
-                x = (50 + tableauDonnees[donnee] / 6) * Math.cos(angle);
-                y = (50 + tableauDonnees[donnee] / 6) * Math.sin(angle);
-                ctx.lineTo(posX + x, posY + y);
-            }
+        for (var i = change; i < Math.PI * 2; i += change) {
+
+            x = (CIRCLE_SIZE_MIN + smoothTabs(i) * CIRCLE_SIZE_FACTOR) * Math.cos(i);
+            y = (CIRCLE_SIZE_MIN + smoothTabs(i) * CIRCLE_SIZE_FACTOR) * Math.sin(i);
+
+            ctx.lineTo(posX + x, posY + y);
         }
         ctx.stroke();
         ctx.fill();
@@ -108,8 +131,7 @@ window.addEventListener('load', function () {
     function boucle() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         analyseur.getByteFrequencyData(tableauDonnees);
-        drawLine(ctx,tableauDonnees);
-        drawLine(ctx,tableauDonnees,true);
+        drawLine(ctx, tableauDonnees);
         w.draw(ctx);
         requestAnimationFrame(boucle)
     }

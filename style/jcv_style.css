@@ -35,7 +35,7 @@ input{
 *  Divers
 */
 .hide{
-    display: none;
+    display: none !important;
 }
 .invisible{
     opacity: 0;
