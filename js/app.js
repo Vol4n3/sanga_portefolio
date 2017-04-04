@@ -1,13 +1,8 @@
 var analyseur;
 window.addEventListener('load', function () {
     "use strict";
-    /**
-     * @param {Event} e
-     */
     document.body.addEventListener('click', function (e) {
-
         var elem = e.target;
-        //console.log(elem);
         if (elem == document.getElementById('btn_galery') || elem == document.getElementById('galery')) {
             var $galery = $('#galery')
             
@@ -22,7 +17,6 @@ window.addEventListener('load', function () {
                     $galery.toggleClass('hide');
                 }, 1000)
             }
-
             $('#main_header').toggleClass('blur');
         }
         if ($(elem).hasClass('img')) {
@@ -34,10 +28,7 @@ window.addEventListener('load', function () {
     var context = new AudioContext();
     analyseur = context.createAnalyser();
     var mainHeader = document.getElementById('main_header');
-
     analyseur.fftSize = Math.pow(2, 11);
-
-    //analyseur.fftSize = 1024;
     var audioBuffer = null;
     function load() {
         var req = new XMLHttpRequest();
@@ -56,7 +47,6 @@ window.addEventListener('load', function () {
                 gainNode.connect(context.destination);
                 gainNode.gain.value = 0.2;
                 source.start(0);
-
             })
         });
         req.send();
@@ -88,12 +78,12 @@ window.addEventListener('load', function () {
     window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
     w.wind.y = -0.02;
     w.speed = 0.10;
-    const CIRCLE_SIZE_MIN = 50;
-    const CIRCLE_SIZE_FACTOR = 0.30;
+    const CIRCLE_SIZE_MIN = 25;
+    const CIRCLE_SIZE_FACTOR = 0.20;
     const TWO_PI = Math.PI * 2;
-    analyseur.minDecibels = -65;
-    analyseur.maxDecibels = -15;
-    analyseur.smoothingTimeConstant = 0.50;
+    analyseur.minDecibels = -64;
+    analyseur.maxDecibels = -2;
+    analyseur.smoothingTimeConstant = 0.45;
     /**
      * @returns {void}
      * @param {CanvasRenderingContext2D} ctx 
@@ -104,8 +94,9 @@ window.addEventListener('load', function () {
         var smoothTabs = Smooth(tableauDonnees, {
             period: TWO_PI,
             method: Smooth.METHOD_CUBIC,
-            clip: Smooth.CLIP_PERIODIC,
             sincFilterSize: 10,
+            scaleTo: 10,
+            clip: Smooth.CLIP_PERIODIC, 
         });
         ctx.beginPath();
         ctx.strokeStyle = 'rgb(255, 255,255)';
@@ -118,7 +109,7 @@ window.addEventListener('load', function () {
         var x = (CIRCLE_SIZE_MIN + smoothTabs(0) * CIRCLE_SIZE_FACTOR) * Math.cos(0);
         var y = (CIRCLE_SIZE_MIN + smoothTabs(0) * CIRCLE_SIZE_FACTOR) * Math.sin(0);
         ctx.moveTo(posX + x, posY + y);
-        for (var i = change; i < Math.PI * 2; i += change) {
+        for (var i = change; i <= Math.PI * 2; i += change) {
 
             x = (CIRCLE_SIZE_MIN + smoothTabs(i) * CIRCLE_SIZE_FACTOR) * Math.cos(i);
             y = (CIRCLE_SIZE_MIN + smoothTabs(i) * CIRCLE_SIZE_FACTOR) * Math.sin(i);
