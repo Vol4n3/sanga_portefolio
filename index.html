@@ -2,9 +2,10 @@
 
 <head>
     <meta charset="utf-8">
-    <title>🎸 Sanga FAUTRE</title>
+    <title>🎸 Sanga</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
+        @import url('https://fonts.googleapis.com/css?family=Muli');
         @import url('https://fonts.googleapis.com/css?family=Indie+Flower');
         @import url('https://fonts.googleapis.com/css?family=Tangerine');
         @import url('https://fonts.googleapis.com/css?family=Bilbo+Swash+Caps');
@@ -13,43 +14,51 @@
     <link rel="stylesheet" type="text/css" href="style/jcv_style.css">
     <link rel="stylesheet" type="text/css" href="style/main.css">
     <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script defer src="js/Smooth-0.1.7.js"></script>
     <script defer src="js/jc_physics.js"></script>
     <script defer src="js/app.js"></script>
 
 </head>
 
 <body>
-    <canvas id="particle"></canvas>
+    
     <header class="" id="main_header">
+        <canvas id="particle"></canvas>
         <nav class="box left space_between nav">
             <a href="#contact">Contact</a>
-            <a href="#presentation">Découverte</a>
+            <a href="javascript:void(0);" id="btn_galery">Galerie</a>
             <a onclick="">Home</a>
         </nav>
         <div class="logo">
             <img src="image/SANGA-pour-fond-fonce.png" width="256" alt="">
         </div>
         <div class="title" id="header_title">
-            <h1>Un Artiste Engagé</h1>
+            <h1>Artiste, Chanteur, Compositeur</h1>
             <div class="wrap">
                 <p>
                     Sanga est un mélange d'origine franco camerounaise par son père et algérien espagnol par sa mère. Élevé dans la musique Funk,
                     Soul, Pop, influencé par Stevie Wonder, Michael Jackson, Earth Wind and Fire, George Duke, ... passionné
                     et amoureux de la musique, il chante pour partager l'amour qu'il porte aux gens vrais qui n'ont pas besoin
                     de mentir pour dire leur vérité, qu'il reçoit toujours avec chaleur et émotion dans un esprit de partage.
-                    "As long as you keep your heart you win everything"
                 </p>
+                
+                <p><em>"As long as you keep your heart you win everything"</em></p>
             </div>
+
         </div>
+
     </header>
     <main class="">
-        <section class="box center y_center invisible" id="galery">
+        <section class="box center y_center invisible hide" id="galery">
+            <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fjeromefautresanga%2F&tabs=timeline&width=340&height=500&small_header=false&adapt_container_width=true&hide_cover=false&show_facepile=true&appId" width="340" height="500" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+            
             <div class="img" style="background-image:url(image/studio.jpg);"></div>
             <div class="img" style="background-image:url(image/sanga_gros_plan.jpg);"></div>
             <div class="img" style="background-image:url(image/studio.jpg);"></div>
             <div class="img" style="background-image:url(image/sanga_gros_plan.jpg);"></div>
         </section>
     </main>
+
 </body>
 
 </html>
