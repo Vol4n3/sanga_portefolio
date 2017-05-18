@@ -23,6 +23,7 @@ height: 100%;
     position: relative;     
 }
 main{
+    display: none;
     position: absolute;
     top: 0;
     left: 0;
@@ -31,6 +32,7 @@ main{
     overflow: hidden;
 }
 #galery{
+
  background: rgba(0,0,0,0.5);
  width: 200%;
  height: 100%;
@@ -47,7 +49,7 @@ main{
     background-position-x: center;
     background-position-y: center;
     background-size: contain;
-        background-color: rgba(0,0,0,0.4);
+    background-color: rgba(0,0,0,0.4);
 }
 #particle{
     position: absolute;
@@ -76,10 +78,13 @@ main{
 #main_header .nav a:hover{
     border-bottom: 2px solid hsla(0, 0%, 100%, 0.9);
 }
-
+#main_header iframe{
+    position: absolute;
+    top: 70px;
+    right: 0;
+}
 #main_header .title{
     color: white;
-    position: fixed;
     padding: 15px;
     left: 0;
     opacity: 1;
@@ -94,13 +99,10 @@ main{
     font-size: 3.0em;
     font-weight: 100;
 }
-<<<<<<< HEAD
 #main_header em{
     text-align: center;
     font-size: 1.2em;
 }
-=======
->>>>>>> fa92801b07489bb5f3fa459614723a4d598d6762
 #main_header p{
     font-family: 'Muli', sans-serif;
     font-size: 1.0em;   
