@@ -74,9 +74,10 @@ window.addEventListener('load', function () {
         w.add(p);
     }
     var tableauDonnees = new Uint8Array(128);
+    w.speed = 0.50;
     window.requestAnimationFrame = window.requestAnimationFrame || window.mozRequestAnimationFrame || window.webkitRequestAnimationFrame || window.msRequestAnimationFrame;
     w.wind.y = -0.02;
-    w.speed = 0.05;
+    w.speed = 0.10;
     const CIRCLE_SIZE_MIN = 25;
     const CIRCLE_SIZE_FACTOR = 0.20;
     const TWO_PI = Math.PI * 2;
@@ -104,8 +105,6 @@ window.addEventListener('load', function () {
 
         var posX = ctx.canvas.width - 50;
         var posY = ctx.canvas.height - 50;
-
-
         var iteration = Math.round(1 * tableauDonnees.length / TWO_PI);
         var change = TWO_PI / tableauDonnees.length;
         var x = (CIRCLE_SIZE_MIN + smoothTabs(0) * CIRCLE_SIZE_FACTOR) * Math.cos(0);

@@ -94,10 +94,13 @@ main{
     font-size: 3.0em;
     font-weight: 100;
 }
+<<<<<<< HEAD
 #main_header em{
     text-align: center;
     font-size: 1.2em;
 }
+=======
+>>>>>>> fa92801b07489bb5f3fa459614723a4d598d6762
 #main_header p{
     font-family: 'Muli', sans-serif;
     font-size: 1.0em;   
