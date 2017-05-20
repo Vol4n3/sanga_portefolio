@@ -1,16 +1,25 @@
 var analyseur;
 window.addEventListener('load', function () {
     "use strict";
+
+    $(window).scroll(function () {
+        if ($(this).scrollTop() > 100) {
+            $('.main_logo').width(100);
+        } else {
+            $('.main_logo').width(150);
+        }
+    });
+    /*
     document.body.addEventListener('click', function (e) {
         var elem = e.target;
         if (elem == document.getElementById('btn_galery') || elem == document.getElementById('galery')) {
             var $galery = $('#galery')
-            
+
             if ($galery.hasClass('hide')) {
                 $galery.toggleClass('hide');
-                setTimeout(function(){
+                setTimeout(function () {
                     $galery.toggleClass('invisible');
-                },1)
+                }, 1)
             } else {
                 $galery.toggleClass('invisible');
                 setTimeout(function () {
@@ -23,6 +32,7 @@ window.addEventListener('load', function () {
             console.log('tru')
         }
     });
+    */
     //const jc_physics = require("./jc_physics.js");
     window.AudioContext = window.AudioContext || window.webkitAudioContext;
     var context = new AudioContext();
@@ -96,7 +106,7 @@ window.addEventListener('load', function () {
             method: Smooth.METHOD_CUBIC,
             sincFilterSize: 10,
             scaleTo: 10,
-            clip: Smooth.CLIP_PERIODIC, 
+            clip: Smooth.CLIP_PERIODIC,
         });
         ctx.beginPath();
         ctx.strokeStyle = 'rgb(255, 255,255)';
