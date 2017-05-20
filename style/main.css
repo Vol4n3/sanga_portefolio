@@ -14,10 +14,10 @@ section{
     position: relative;
 }
 #video_background{
-min-width: 100%;
-min-height: 100%;
-width: auto;
-height: auto;
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
     position: relative;
     z-index: -100;
 }
@@ -58,6 +58,7 @@ body{
     top: 0;
     border-bottom: rgba(255, 255, 255, 0.5) solid 1px;
     width: 100%;
+    z-index: 100;
 }
 header nav{
     color: white;
@@ -80,6 +81,7 @@ header ul li {
     position: relative;
 }
 header nav a{
+        font-family: 'Muli', sans-serif;
     padding: 0.35em 1.25em;
     min-width: 50px;
     font-size: 1.5em;
