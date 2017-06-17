@@ -11,16 +11,27 @@
         @import url('https://fonts.googleapis.com/css?family=Bilbo+Swash+Caps');
     </style>
     <link rel="stylesheet" type="text/css" href="style/normalize.css">
+    <link rel="stylesheet" type="text/css" href="style/swiper.min.css">
     <link rel="stylesheet" type="text/css" href="style/jcv_style.css">
     <link rel="stylesheet" type="text/css" href="style/main.css">
     <script defer src="js/jquery.js"></script>
-    <script defer src="js/Smooth-0.1.7.js"></script>
+    <script defer src="js/swiper.jquery.min.js"></script>
     <script defer src="js/jc_physics.js"></script>
     <script defer src="js/app.js"></script>
 
 </head>
 
 <body>
+    <div id="fb-root"></div>
+    <script>
+        (function (d, s, id) {
+            var js, fjs = d.getElementsByTagName(s)[0];
+            if (d.getElementById(id)) return;
+            js = d.createElement(s); js.id = id;
+            js.src = "//connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v2.9";
+            fjs.parentNode.insertBefore(js, fjs);
+        }(document, 'script', 'facebook-jssdk'));
+    </script>
     <canvas id="particle"></canvas>
     <header class="header_fixed">
         <img class="main_logo" src="image/SANGA-pour-fond-fonce.png" alt="">
@@ -40,16 +51,25 @@
 
     </header>
     <main>
-        <section>
+        <section class="video">
             <video id="video_background" preload="auto" autoplay="true" loop="loop" muted="muted" volume="0">
-                <source src="assets/sanga.mp4" type="video/mp4"> </video>
+                <source src="assets/sanga2.mp4" type="video/mp4">
+
+            </video>
+            <div class="bottom_overlay_gradiant">
+
+            </div>
             <div class="title">
                 <h1>Artiste, Chanteur, Compositeur</h1>
             </div>
         </section>
         <section>
-            <article>
-                <div class="wraper">
+            <div class="top_overlay_gradiant">
+
+            </div>
+
+            <article class="box center wraper down y_center">
+                <div class="">
                     <p>
                         Il grandit auprés de sa maman, la musique accompagnait chaque moment , il découvra la télévision qu'a l'adolescence , étant
                         fils unique l'ame de la musique le remplissai d'amour. nous vivant le reve de beaucoup de gens malheureux,
@@ -61,18 +81,38 @@
                     </p>
                     <p><em>"As long as you keep your heart you win everything"</em></p>
                 </div>
-
-
-                <iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fjeromefautresanga%2F&tabs=timeline&width=400&height=600&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
-                    width="400" height="600" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>
+                <div class="swiper-container">
+                    <div class="swiper-wrapper">
+                        <div class="swiper-slide" style="background-image:url(image/slider01.jpg);"></div>
+                        <div class="swiper-slide" style=" background-image:url(image/slider02.jpg);"></div>
+                        <div class="swiper-slide" style=" background-image:url(image/slider03.jpg);"></div>
+                        <div class="swiper-slide" style=" background-image:url(image/slider04.jpg);"></div>
+                        <div class="swiper-slide" style=" background-image:url(image/slider05.jpg);"></div>
+                        <div class="swiper-slide" style=" background-image:url(image/slider06.jpg);"></div>
+                        <div class="swiper-slide" style=" background-image:url(image/slider07.jpg);"></div>
+                        <div class="swiper-slide" style=" background-image:url(image/slider08.jpg);"></div>
+                        <div class="swiper-slide" style=" background-image:url(image/slider09.jpg);"></div>
+                        <div class="swiper-slide" style=" background-image:url(image/slider10.jpg);"></div>
+                        <div class="swiper-slide" style=" background-image:url(image/slider11.jpg);"></div>
+                        <div class="swiper-slide" style=" background-image:url(image/slider12.jpg);"></div>
+                        <div class="swiper-slide" style=" background-image:url(image/slider13.jpg);"></div>
+                    </div>
+                    <!-- Add Arrows -->
+                    <div class="swiper-button-next swiper-button-white"></div>
+                    <div class="swiper-button-prev swiper-button-white"></div>
+                </div>
+                <!--<iframe src="https://www.facebook.com/plugins/page.php?href=https%3A%2F%2Fwww.facebook.com%2Fjeromefautresanga%2F&tabs=timeline&small_header=true&adapt_container_width=true&hide_cover=false&show_facepile=true&appId"
+                   height="800" style="border:none;overflow:hidden" scrolling="no" frameborder="0" allowTransparency="true"></iframe>-->
             </article>
+            <div class="facebook">
+                <div class="fb-page" data-href="https://www.facebook.com/jeromefautresanga/" data-tabs="timeline" data-width="500" data-height="800"
+                    data-adapt-container-width="true" data-hide-cover="false" data-show-facepile="true">
+                    <blockquote cite="https://www.facebook.com/jeromefautresanga/" class="fb-xfbml-parse-ignore"><a href="https://www.facebook.com/jeromefautresanga/">Sanga</a></blockquote>
+                </div>
+
+            </div>
         </section>
-        <section class="box center y_center" id="galery">
-            <div class="img" style="background-image:url(image/studio.jpg);"></div>
-            <div class="img" style="background-image:url(image/sanga_gros_plan.jpg);"></div>
-            <div class="img" style="background-image:url(image/studio.jpg);"></div>
-            <div class="img" style="background-image:url(image/sanga_gros_plan.jpg);"></div>
-        </section>
+
     </main>
 </body>
 

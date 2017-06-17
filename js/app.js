@@ -4,10 +4,16 @@ window.addEventListener('load', function () {
 
     $(window).scroll(function () {
         if ($(this).scrollTop() > 100) {
-            $('.main_logo').width(100);
+            $('.main_logo').width(75);
         } else {
             $('.main_logo').width(150);
         }
+    });
+    var swiper = new Swiper('.swiper-container', {
+        nextButton: '.swiper-button-next',
+        prevButton: '.swiper-button-prev',
+        spaceBetween: 30,
+        effect: 'fade'
     });
     /*
     document.body.addEventListener('click', function (e) {
@@ -61,7 +67,7 @@ window.addEventListener('load', function () {
         });
         req.send();
     }
-    load();
+    //load();
 
     // particles
     /**
@@ -132,8 +138,8 @@ window.addEventListener('load', function () {
     }
     function boucle() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
-        analyseur.getByteFrequencyData(tableauDonnees);
-        drawLine(ctx, tableauDonnees);
+        //analyseur.getByteFrequencyData(tableauDonnees);
+        //drawLine(ctx, tableauDonnees);
         w.draw(ctx);
         requestAnimationFrame(boucle)
     }
