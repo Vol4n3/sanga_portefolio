@@ -5,8 +5,10 @@ window.addEventListener('load', function () {
     $(window).scroll(function () {
         if ($(this).scrollTop() > 100) {
             $('.main_logo').width(75);
+            $('.header_fixed').css('backgroundColor','rgba(0,0,0,0.1)');
         } else {
             $('.main_logo').width(150);
+            $('.header_fixed').css('backgroundColor','rgba(0,0,0,0.9)');
         }
     });
     var swiper = new Swiper('.swiper-container', {
